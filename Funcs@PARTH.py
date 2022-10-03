@@ -1,0 +1,1 @@
+intro = print("Hello user, I am PARTH.\nPARTH stands for ")
