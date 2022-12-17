@@ -85,19 +85,17 @@ elif 'open whatsapp web' in query.lower():
     chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
     webbrowser.get(chrome_path).open(url)
     
-elif 'open mail' or 'open gmail' in query.lower():
-    url = 'mail.google.com'
-    chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
-    webbrowser.get(chrome_path).open(url)
     
 elif 'play music' in query.lower():
-    songs_dir = os.listdir('"C:/Users/consu/Desktop/Krishna Super/PARTH/PARTH_music"')
+    songs_dir = 'C:\\Users\\consu\\Desktop\\Krishna Super\\PARTH\\PARTH_music'
     songs = os.listdir(songs_dir)
     print(songs)
-    # a = random.randint(1, 3)
-    # if a == 1:
-    #     os.startfile(os.path.join(songs_dir, songs[0]))
-    # else:
-    #     os.startfile(os.path.join(songs_dir, songs[1]))
+    # os.startfile(os.path.join(songs_dir, songs[0]))
+  
+    a = random.randint(1, 3)
+    if a == 1:
+        os.startfile(os.path.join(songs_dir, songs[0]))
+    else:
+        os.startfile(os.path.join(songs_dir, songs[1]))
 else:
     print()
