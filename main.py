@@ -1,5 +1,5 @@
 import os
-import fontstyle
+import fontstyle as fnt
 import pyttsx3
 import datetime
 import wikipedia
@@ -7,7 +7,14 @@ import webbrowser
 import speech_recognition as sr
 import smtplib
 import random
-from GuessGameV8 import *
+from GuessGameV8_easy import *
+from GuessGameV8_hard import *
+from GuessGameV8_medium import *
+from GuessGameV8_impossible import *
+from superCalcy import *
+
+
+
 
 engine = pyttsx3.init('sapi5') # initializes sapi5 which is a voice api developed by Microsoft itself.
 voices = engine.getProperty('voices') #gets the properties of all the available vocies.
@@ -38,7 +45,7 @@ def wishMe():
         
         print(fontstyle.apply(f'Good Evening {name}', 'blue/bold'))
         speak(f'Good Evening {name}...')
-        
+        main_calcy()
 
 
 # takeCommand function will take input from the user in the form of voice.   
@@ -78,7 +85,7 @@ def main():
             speak('Searching it on WEB...')
             query = query.replace('wikipedia', '')
             try:
-                results = wikipedia.summary(query, sentences = 3)
+                results = wikipedia.summary(query, sentences = 2)
                 print(fontstyle.apply(results, 'cyan/bold/underline'))
                 speak(f'{results}...')
             except Exception as e:
@@ -127,7 +134,7 @@ def main():
         elif 'play music' in query.lower():
             songs_dir = 'C:\\Users\\consu\\Desktop\\Krishna Super\\PARTH\\PARTH_music'
             songs = os.listdir(songs_dir)
-            print(songs)
+            # print(songs)
             # os.startfile(os.path.join(songs_dir, songs[0]))
         
             a = random.randint(1, 3)
@@ -166,7 +173,7 @@ def main():
             codePath = "C:\\external softwares\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
             
-        elif 'shutdown' or 'bye' in query.lower():
+        elif 'shutdown' in query.lower():
             print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
             speak('Shutting down PARTH program...')
             print(fontstyle.apply(f'Bye {name}', 'blue/bold'))
@@ -182,8 +189,48 @@ def main():
             os.system('cls')
             print(fontstyle.apply('Let\'s play a game!', 'blue/bold'))
             speak('Let\'s play a game...')
-            main_game()
+            print(fnt.apply('Choose your difficulty level.'))
+            speak('Choose your difficulty level.')
+            print(fnt.apply('Enter 1 for easy mode, 2 for medium mode, 3 for hard mode and 4 for the impossible mode.', 'cyan/bold'))
+            speak(('Enter 1 for easy mode, 2 for medium mode, 3 for hard mode and 4 for the impossible mode.'))
+            mode = int(input(fnt.apply('--->   ', 'blue/bold')))
+            if mode == 1:
+                print(fnt.apply('Downloading easy difficulty...', 'green/bold'))
+                speak('Downloading easy difficulty...')
+                main_game_easy()
+            elif mode == 2:
+                print(fnt.apply('Downloading medium difficulty...', 'yellow/bold'))
+                speak('Downloading medium difficulty...')
+                main_game_medium()
+            elif mode == 3:
+                print(fnt.apply('Downloading hard difficulty...', 'red/bold'))
+                speak('Downloading hard difficulty...')
+                main_game_hard()
+            elif mode == 4:
+                print(fnt.apply('Downloading impossible difficulty...', 'white/bold'))
+                speak('Downloading impossible difficulty...')
+                main_game_impossible()
+            else:
+                print(fnt.apply('Can you please stop bothering me?', 'red/bold'))
+                speak('Can you please stop bothering me?')
             
+        elif 'change' and 'name' in query.lower():
+            print(fnt.apply('Forgotting name...', 'blue/bold'))
+            speak('Forgotting name...')
+            print(fnt.apply('Tell me your name, user...', 'blue/bold'))
+            speak('Tell me your name, user...')
+            name = takeCommand()
+            if name == 'Krishna Anand':
+                name = 'Madhav'
+            print(fnt.apply('Name changed succesfully', 'green/bold'))
+            speak('Name changed succesfully')
+            print(fnt.apply(f'Hi {name}', 'blue/bold'))
+            speak(f'Hi {name}')
+            
+        elif 'open calculator' in query.lower():
+            print(fnt.apply('Opening manual calculator...', 'blue/bold'))
+            speak('Opening manual calculator...')
+            main_calcy()
             
 
         else:
@@ -194,26 +241,44 @@ def main():
         
 if __name__ == '__main__':
     os.system('cls')
+    input(fontstyle.apply('Press Enter to initialize:  ', 'white/bold'))
+    os.system('cls')
     print(fontstyle.apply('Initializing PARTH...', 'blue/bold'))
     speak('Initializing PARTH...')
     print(fontstyle.apply('Activated', 'green/bold'))
     speak('Activated')
-    print(fontstyle.apply('Tell me your name. ONLY NAME.', 'blue/bold'))
-    speak('Tell me your name. ONLY NAME!!!...')
-    name = takeCommand()
-    if name.lower() == 'krishna anand' or name.lower() == 'k29':
-        name = 'Madhav'
-        print(fontstyle.apply('Special user detected!', 'green/bold'))
-        speak('Special user detected...')
-    elif name == 'shutdown' or name == 'bye':
-        print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
-        speak('Shutting down PARTH program...')
-        print(fontstyle.apply('Deactivated', 'red/bold'))
-        exit()
-    wishMe()
-    print(fontstyle.apply('How may I help you?', 'blue/bold'))
-    speak('How may I help you?...')
-    main()
+    print(fontstyle.apply('What\'s your name, user?', 'blue/bold'))
+    speak('What\'s your name, user?...')
+    try:
+        name = takeCommand()
+        if name.lower() == 'krishna anand':
+            name = 'Madhav'
+            print(fontstyle.apply('Special user detected!', 'green/bold'))
+            speak('Special user detected...')
+        elif name == 'shutdown' or name == 'bye':
+            print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
+            speak('Shutting down PARTH program...')
+            print(fontstyle.apply('Deactivated', 'red/bold'))
+            exit()
+        wishMe()
+        print(fontstyle.apply('How may I help you?', 'blue/bold'))
+        speak('How may I help you?...')
+        main()
+    except UnboundLocalError:
+        name = takeCommand()
+        if name.lower() == 'krishna anand':
+            name = 'Madhav'
+            print(fontstyle.apply('Special user detected!', 'green/bold'))
+            speak('Special user detected...')
+        elif name == 'shutdown' or name == 'bye':
+            print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
+            speak('Shutting down PARTH program...')
+            print(fontstyle.apply('Deactivated', 'red/bold'))
+            exit()
+        wishMe()
+        print(fontstyle.apply('How may I help you?', 'blue/bold'))
+        speak('How may I help you?...')
+        main()
     
     
     

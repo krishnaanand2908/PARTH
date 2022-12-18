@@ -21,10 +21,10 @@ def speak(text):
         
 def guess_game_v5():
     os.system("CLS")
-    num = random.randint(1, 100)
+    num = random.randint(1, 500)
     guess = 1
-    print(fontstyle.apply("You have to guess a number between 1 to 100\nYou will only get 9 chances!\n Enjoy :-)", "Cyan/bold"))
-    speak("You have to guess a number between 1 to 100... You will only get 9 chances!... ENJOY!.........")
+    print(fontstyle.apply("You have to guess a number between 1 to 500\nYou will only get 9 chances!\n Enjoy :-)", "Cyan/bold"))
+    speak("You have to guess a number between 1 to 500... You will only get 9 chances!... ENJOY!.........")
     
     
     while (guess<=9):
@@ -76,7 +76,7 @@ def guess_game_v5():
             
             
             
-def main_game():
+def main_game_hard():
     os.system('cls')
     print(fontstyle.apply("Gathering Information...", "blue/bold"))
     speak("Gathering Information...")
@@ -109,7 +109,7 @@ def main_game():
             bye = fontstyle.apply("|---Please come again soon---|", "bold/italic/white/red_bg")
             print(bye)
             speak("Please Come Again Soon...")
-            exit()
+            
     else:
             print()    
 
