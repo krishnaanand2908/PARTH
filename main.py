@@ -13,6 +13,20 @@ from GuessGameV8_medium import *
 from GuessGameV8_impossible import *
 from superCalcy import *
 
+# elif 'change' and 'name' in query.lower():
+        #     print(fnt.apply('Forgotting name...', 'blue/bold'))
+        #     speak('Forgotting name...')
+        #     print(fnt.apply('Tell me your name, user...', 'blue/bold'))
+        #     speak('Tell me your name, user...')
+        #     name = takeCommand()
+        #     if name == 'Krishna Anand':
+        #         name1 = 'Madhav'
+        #         name = name1
+        #     print(fnt.apply('Name changed succesfully', 'green/bold'))
+        #     speak('Name changed succesfully')
+        #     print(fnt.apply(f'Hi {name}', 'blue/bold'))
+        #     speak(f'Hi {name}')
+
 
 
 
@@ -50,6 +64,7 @@ def wishMe():
 
 # takeCommand function will take input from the user in the form of voice.   
 def takeCommand():
+    
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print(fontstyle.apply('Listening...', 'blue/bold'))
@@ -59,7 +74,7 @@ def takeCommand():
         print(fontstyle.apply('Recognizing...', 'blue/bold'))
         query = r.recognize_google(audio, language = 'en-in')
         print(fontstyle.apply(f'User said: {query}\n', 'blue/bold'))
-    except Exception as e:
+    except (sr.UnknownValueError, sr.RequestError):
         print(fontstyle.apply('Can\'t recognize! Say that again please', 'blue/bold'))
     return query  
 
@@ -121,7 +136,7 @@ def main():
             webbrowser.get(chrome_path).open(url)
             
         elif 'open stackoverflow' in query.lower():
-            url = 'www.stackoverflow.com'
+            url = 'stackoverflow.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
             
@@ -169,6 +184,17 @@ def main():
             print(fontstyle.apply(timeTxT, 'blue/bold'))
             speak(f'It\'s {time}')
             
+        elif 'search' and 'google' in query.lower():
+                chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+
+                base_url = "http://www.google.com/search?q="
+                
+                print(fontstyle.apply('What should I search?', 'blue/bold'))
+                speak('What should I search?')
+
+                query = takeCommand()
+
+                webbrowser.get(chrome_path).open_new(base_url+query)
         elif  'open code' in query.lower():
             codePath = "C:\\external softwares\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
@@ -214,18 +240,7 @@ def main():
                 print(fnt.apply('Can you please stop bothering me?', 'red/bold'))
                 speak('Can you please stop bothering me?')
             
-        elif 'change' and 'name' in query.lower():
-            print(fnt.apply('Forgotting name...', 'blue/bold'))
-            speak('Forgotting name...')
-            print(fnt.apply('Tell me your name, user...', 'blue/bold'))
-            speak('Tell me your name, user...')
-            name = takeCommand()
-            if name == 'Krishna Anand':
-                name = 'Madhav'
-            print(fnt.apply('Name changed succesfully', 'green/bold'))
-            speak('Name changed succesfully')
-            print(fnt.apply(f'Hi {name}', 'blue/bold'))
-            speak(f'Hi {name}')
+        
             
         elif 'open calculator' in query.lower():
             print(fnt.apply('Opening manual calculator...', 'blue/bold'))
@@ -249,36 +264,28 @@ if __name__ == '__main__':
     speak('Activated')
     print(fontstyle.apply('What\'s your name, user?', 'blue/bold'))
     speak('What\'s your name, user?...')
-    try:
-        name = takeCommand()
-        if name.lower() == 'krishna anand':
-            name = 'Madhav'
-            print(fontstyle.apply('Special user detected!', 'green/bold'))
-            speak('Special user detected...')
-        elif name == 'shutdown' or name == 'bye':
-            print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
-            speak('Shutting down PARTH program...')
-            print(fontstyle.apply('Deactivated', 'red/bold'))
-            exit()
-        wishMe()
-        print(fontstyle.apply('How may I help you?', 'blue/bold'))
-        speak('How may I help you?...')
-        main()
-    except UnboundLocalError:
-        name = takeCommand()
-        if name.lower() == 'krishna anand':
-            name = 'Madhav'
-            print(fontstyle.apply('Special user detected!', 'green/bold'))
-            speak('Special user detected...')
-        elif name == 'shutdown' or name == 'bye':
-            print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
-            speak('Shutting down PARTH program...')
-            print(fontstyle.apply('Deactivated', 'red/bold'))
-            exit()
-        wishMe()
-        print(fontstyle.apply('How may I help you?', 'blue/bold'))
-        speak('How may I help you?...')
-        main()
+    
+   
+    name = takeCommand()
+    
+    if name.lower() == 'krishna anand':
+        name = 'Madhav'
+        print(fontstyle.apply('Special user detected!', 'green/bold'))
+        speak('Special user detected...')
+    elif name.lower() == 'shivraj anand':
+        name = 'Owner of MAYA'
+        print(fontstyle.apply('Special user detected!', 'green/bold'))
+        speak('Special user detected...')
+    elif name.lower() == 'shutdown' or name.lower() == 'bye':
+        print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
+        speak('Shutting down PARTH program...')
+        print(fontstyle.apply('Deactivated', 'red/bold'))
+        exit()
+    wishMe()
+    print(fontstyle.apply('How may I help you?', 'blue/bold'))
+    speak('How may I help you?...')
+    main()
+     
     
     
     
