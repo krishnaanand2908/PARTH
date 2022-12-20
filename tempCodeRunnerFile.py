@@ -1,0 +1,1 @@
+speak('Krishna is a good boy')
