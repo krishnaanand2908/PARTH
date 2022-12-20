@@ -91,9 +91,10 @@ def introduction():
 
 def main():
     
-    while(True):
+    while True:
     
         query = takeCommand()
+        
 
         if 'wikipedia' in query.lower():
             print(fontstyle.apply('Searching it on web...', 'blue/bold'))
@@ -118,7 +119,7 @@ def main():
             
         elif 'maya' in query.lower():
             print(fontstyle.apply(f'M.A.Y.A. is like my elder sister. I used to call her didi.', 'yellow/bold/underline'))
-            speak('MAYA is like my elder sister. I used to call her di, di...')
+            speak('MAYA is like my elder sister. I used to call her DI,DI...')
             
         elif 'open youtube' in query.lower():
             url = 'www.youtube.com'
@@ -207,9 +208,17 @@ def main():
             print(fontstyle.apply('Deactivated', 'red/bold'))
             break
         
+        elif 'shut' in query.lower() and 'down' in query.lower():
+            print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
+            speak('Shutting down PARTH program...')
+            print(fontstyle.apply(f'Bye {name}', 'blue/bold'))
+            speak(f'Bye {name}')
+            print(fontstyle.apply('Deactivated', 'red/bold'))
+            break
+        
         elif 'who am i' in query.lower():
-            print(f'Your name is {name}')
-            speak(f'Your name is {name}')
+            print(f'Your are my {name}')
+            speak(f'Your are my {name}')
             
         elif 'play' and 'game' in query.lower():
             os.system('cls')
@@ -247,12 +256,40 @@ def main():
             speak('Opening manual calculator...')
             main_calcy()
             
+        elif 'change' in query.lower() and 'name' in query.lower():
+            print(fnt.apply('Forgotting name...', 'blue/bold'))
+            speak('Forgotting name...')
+            print(fnt.apply('Tell me your name, user...', 'blue/bold'))
+            speak('Tell me your name, user...')
+            name = takeCommand()
+            if name == 'Krishna Anand':
+                name1 = 'Madhav'
+                name = name1
+            elif name == 'Shivraj Anand':
+                name1 = 'Uncle Shiv'
+                name = name1
+                print(fnt.apply('I remember you are my uncle!...', 'yellow/bold'))
+                speak('I remember you are my uncle!...')
+            print(fnt.apply('Name changed succesfully', 'green/bold'))
+            speak('Name changed succesfully')
+            print(fnt.apply(f'Hi {name}', 'blue/bold'))
+            speak(f'Hi {name}')
+
+        elif 'repeat' in query.lower():
+            print(fnt.apply(f'You said: {query}', 'blue/bold'))
+            speak(f'You said: {query}')
+            
 
         else:
-            
-            speak(f'You said, {query}...')
             print(fontstyle.apply('Your command is not recognized!', 'red/bold'))
             speak('Your command is not recognized')
+            print(fnt.apply('Searching it on google...', 'green/bold'))
+            speak('Searching it on google...')
+            query1 = query
+            chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+            base_url = "http://www.google.com/search?q="
+            print(fnt.apply('What should I search?', 'blue/bold'))
+            webbrowser.get(chrome_path).open_new(base_url+query1)
         
 if __name__ == '__main__':
     os.system('cls')
@@ -273,10 +310,12 @@ if __name__ == '__main__':
         print(fontstyle.apply('Special user detected!', 'green/bold'))
         speak('Special user detected...')
     elif name.lower() == 'shivraj anand':
-        name = 'Owner of MAYA'
+        name = 'Uncle SHIV'
+        print(fnt.apply('I remember you are my uncle!...', 'yellow/bold'))
+        speak('I remember you are my uncle!')
         print(fontstyle.apply('Special user detected!', 'green/bold'))
         speak('Special user detected...')
-    elif name.lower() == 'shutdown' or name.lower() == 'bye':
+    elif 'shutdown' in name.lower() or 'bye' in name.lower():
         print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
         speak('Shutting down PARTH program...')
         print(fontstyle.apply('Deactivated', 'red/bold'))
@@ -284,8 +323,15 @@ if __name__ == '__main__':
     wishMe()
     print(fontstyle.apply('How may I help you?', 'blue/bold'))
     speak('How may I help you?...')
-    main()
-     
+    try:
+        main()
+    except UnboundLocalError:
+        print(fnt.apply('An UnboundLocalError  occured', 'red/bold'))
+        main()
+    except Exception as e:
+        print(fnt.apply('An error occured', 'red/bold'))
+        main()
+        
     
     
     
