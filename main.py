@@ -14,20 +14,39 @@ from GuessGameV8_impossible import *
 from superCalcy import *
 
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('rate', 185)
-engine.setProperty('voice', voices[0].id)
+# engine = pyttsx3.init('sapi5')
+# voices = engine.getProperty('voices')
+# engine.setProperty('rate', 195)
+# engine.setProperty('voice', voices[0].id)
+
+# quickEngine = pyttsx3.init('sapi5')
+# quickVoices = engine.getProperty('voices')
+# quickEngine.setProperty('rate',230)
+# quickEngine.setProperty('voice', voices[0].id)
 
 
 
 def speak(audio):
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    engine.setProperty('rate', 195)
+    engine.setProperty('voice', voices[0].id)
     '''
     This function will speak or rather pronounce the argument which you will give it.
     '''
     engine.say(audio)
     engine.runAndWait()
-  
+    
+def speakFast(audio):
+    quickEngine = pyttsx3.init('sapi5')
+    quickVoices = engine.getProperty('voices')
+    quickEngine.setProperty('rate',230)
+    quickEngine.setProperty('voice', voices[0].id)
+    '''
+    This function will speak or rather pronounce the argument which you will give it. It it different from the speak funtion because this one speaks faster than the original speak funtnio.
+    '''
+    quickEngine.say(audio)
+    quickEngine.runAndWait()
 
 def takeCommand():
     r = sr.Recognizer()
@@ -41,7 +60,7 @@ def takeCommand():
             query = r.recognize_google(audio, language='en-in')
             print(fnt.apply(f'User said: {query}', 'blue/bold'))
         except Exception as e:
-            print(fnt.apply(f'Can recognize! Say that again please!', 'blue/bold'))
+            print(fnt.apply(f'Can\'t Recognize! Say that again please!', 'blue/bold'))
             return(fnt.apply('An error occured...', 'red/bold'))
     return query
 
@@ -103,6 +122,13 @@ def introduction():
     print(fnt.apply('How may I help you?...'))
     speak('How may I help you?')
 
+
+# if __name__ == '__main__':
+#     print(fnt.apply('Initializing PARTH', 'blue/bold'))
+#     speak('Initializing PARTH')  
+#     wishMe()
+
+
 def main():
     while True:
         query = takeCommand().lower()
@@ -110,16 +136,25 @@ def main():
         
         if 'wikipedia' in query:
             print(fnt.apply('Searching Wikipedia', 'blue/bold'))
+            speak('Searching Wikipedia')
             query = query.replace('wikipedia', '')
             results = wikipedia.summary(query, sentences=1)
             print(fnt.apply(results, 'blue/bold'))
             speak(results)
             
+        elif 'essay' in query:
+            print(fnt.apply('Searching Wikipedia', 'blue/bold'))
+            speak('Searching Wikipedia')
+            query = query.replace('long article', '')
+            results = wikipedia.summary(query, sentences=10)
+            print(fnt.apply(results, 'blue/bold'))
+            speakFast(results)
+            
         elif 'open youtube' in query:
             url = 'www.youtube.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-                                             
+                                                
         elif 'open google' in query.lower():
             url = 'www.google.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
