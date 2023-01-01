@@ -25,7 +25,6 @@ from superCalcy import *
 # quickEngine.setProperty('voice', voices[0].id)
 
 
-
 def speak(audio):
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
@@ -36,17 +35,19 @@ def speak(audio):
     '''
     engine.say(audio)
     engine.runAndWait()
-    
+
+
 def speakFast(audio):
     quickEngine = pyttsx3.init('sapi5')
     quickVoices = engine.getProperty('voices')
-    quickEngine.setProperty('rate',230)
+    quickEngine.setProperty('rate', 230)
     quickEngine.setProperty('voice', voices[0].id)
     '''
     This function will speak or rather pronounce the argument which you will give it. It it different from the speak funtion because this one speaks faster than the original speak funtnio.
     '''
     quickEngine.say(audio)
     quickEngine.runAndWait()
+
 
 def takeCommand():
     r = sr.Recognizer()
@@ -61,7 +62,7 @@ def takeCommand():
             print(fnt.apply(f'User said: {query}', 'blue/bold'))
         except Exception as e:
             print(fnt.apply(f'Can\'t Recognize! Say that again please!', 'blue/bold'))
-            return(fnt.apply('An error occured...', 'red/bold'))
+            return (fnt.apply('An error occured...', 'red/bold'))
     return query
 
 
@@ -71,7 +72,7 @@ def wishMe():
     '''
     print(fnt.apply('What\'s your name user?', 'blue/bold'))
     speak('What\'s your name, user?...')
-    name = takeCommand() 
+    name = takeCommand()
     if name.lower() == 'krishna anand':
         name = 'Madhav'
         print(fontstyle.apply('Special user detected!', 'green/bold'))
@@ -87,27 +88,28 @@ def wishMe():
         speak('Shutting down PARTH program...')
         print(fontstyle.apply('Deactivated', 'red/bold'))
         exit()
-    
-        
-    hour = int(datetime.datetime.now().hour) # assigns the current time in hours to a variable.
-    if hour >= 0 and hour < 12:        
+
+    # assigns the current time in hours to a variable.
+    hour = int(datetime.datetime.now().hour)
+    if hour >= 0 and hour < 12:
         print(fnt.apply(f'Good Morning {name}', 'blue/bold'))
         speak(f'Good Morning {name}...')
-        
-    elif hour >= 12 and hour < 18:        
+
+    elif hour >= 12 and hour < 18:
         print(fnt.apply(f'Good Afternoon {name}', 'blue/bold'))
         speak(f'Good Afternoon {name}...')
-        
-    elif hour == 12:        
+
+    elif hour == 12:
         print(fnt.apply(f'Good Noon {name}', 'blue/bold'))
         speak(f'Good Noon {name}...')
-        
+
     else:
         print(fnt.apply(f'Good Evening {name}', 'blue/bold'))
         speak(f'Good Evening {name}...')
-    
+
     print(fnt.apply('How may I help you?', 'blue/bold'))
     speak('How may I help you?')
+
 
 def introduction():
     print(fnt.apply('Hi, It\'s PARTH!', 'cyan/bold'))
@@ -125,7 +127,7 @@ def introduction():
 
 # if __name__ == '__main__':
 #     print(fnt.apply('Initializing PARTH', 'blue/bold'))
-#     speak('Initializing PARTH')  
+#     speak('Initializing PARTH')
 #     wishMe()
 
 
@@ -133,7 +135,7 @@ def main():
     while True:
         query = takeCommand().lower()
         '''This function defineslogic for excecuting task based on query'''
-        
+
         if 'wikipedia' in query:
             print(fnt.apply('Searching Wikipedia', 'blue/bold'))
             speak('Searching Wikipedia')
@@ -141,7 +143,7 @@ def main():
             results = wikipedia.summary(query, sentences=1)
             print(fnt.apply(results, 'blue/bold'))
             speak(results)
-            
+
         elif 'essay' in query:
             print(fnt.apply('Searching Wikipedia', 'blue/bold'))
             speak('Searching Wikipedia')
@@ -149,44 +151,44 @@ def main():
             results = wikipedia.summary(query, sentences=10)
             print(fnt.apply(results, 'blue/bold'))
             speakFast(results)
-            
+
         elif 'open youtube' in query:
             url = 'www.youtube.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-                                                
+
         elif 'open google' in query.lower():
             url = 'www.google.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-            
+
         elif 'open replit' in query.lower():
             url = 'https://replit.com/~'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-            
+
         elif 'open web code' in query.lower():
             url = 'https://replit.com/~'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-            
+
         elif 'open stack' in query.lower() and 'over' in query and 'flow' in query:
             url = 'stackoverflow.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-            
+
         elif 'open whatsapp web' in query.lower():
             url = 'web.whatsapp.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
-            
+
         elif 'play music' in query.lower():
             songs_dir = 'C:\\Users\\consu\\Desktop\\Krishna Super\\PARTH\\PARTH_music'
             songs = os.listdir(songs_dir)
-            
+
             index = random.randint(0, len(songs)-1)
             os.startfile(os.path.join(songs_dir, songs[index]))
-            
+
         elif 'search' and 'google' in query.lower():
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
 
@@ -197,7 +199,7 @@ def main():
 
             query = takeCommand()
             webbrowser.get(chrome_path).open_new(base_url+query)
-            
+
         elif 'the time' in query.lower():
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             hourtime = int(datetime.datetime.now().hour)
@@ -224,29 +226,28 @@ def main():
             speak(f"The time is {strTime}")
             print(fnt.apply(timeTxT, 'blue/bold'))
             speak(f'It\'s {time}')
-            
+
         elif 'open code' in query.lower():
             codePath = "C:\\external softwares\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
-            
+
         elif 'who am i' in query.lower():
             print(f'Your are my {name}')
             speak(f'Your are my {name}')
-            
+
         elif 'maya' in query.lower():
             print(fontstyle.apply(
                 f'M.A.Y.A. is like my elder sister. I used to call her didi.', 'yellow/bold/underline'))
-            speak('MAYA is like my elder sister. I used to call her DI,DI...')    
-        
-            
+            speak('MAYA is like my elder sister. I used to call her DI,DI...')
+
         elif 'clear' and 'screen' in query.lower():
             os.system('cls')
             print(fnt.apply('"Successfully cleared the screen"', 'green/bold'))
             speak('Successfully cleared the screen')
-            
+
         elif 'introduce yourself' in query.lower():
             introduction()
-            
+
         elif 'play' and 'game' in query.lower():
             os.system('cls')
             print(fontstyle.apply('Let\'s play a game!', 'blue/bold'))
@@ -277,12 +278,12 @@ def main():
             else:
                 print(fnt.apply('Can you please stop bothering me?', 'red/bold'))
                 speak('Can you please stop bothering me?')
-                
+
         elif 'open calculator' in query.lower():
             print(fnt.apply('Opening manual calculator...', 'blue/bold'))
             speak('Opening manual calculator...')
             main_calcy()
-            
+
         elif 'change' in query.lower() and 'name' in query.lower():
             print(fnt.apply('Forgotting name...', 'blue/bold'))
             speak('Forgotting name...')
@@ -301,12 +302,12 @@ def main():
             speak('Name changed succesfully')
             print(fnt.apply(f'Hi {name}', 'blue/bold'))
             speak(f'Hi {name}')
-            
+
         elif 'repeat' in query.lower():
             print(fnt.apply(f'You said: {query}', 'blue/bold'))
             query = query.replace('repeat', '')
             speak(f'You said: {query}')
-            
+
         elif 'shutdown' in query.lower():
             print(fontstyle.apply('Shutting down PARTH program...', 'red/bold'))
             speak('Shutting down PARTH program...')
@@ -314,18 +315,16 @@ def main():
             speak(f'Bye {name}')
             print(fontstyle.apply('Deactivated', 'red/bold'))
             break
-            
+
         else:
             print(fnt.apply('Command not recognised!', 'red/bold'))
             speak('Command not recognised!')
-            
-        
-            
+
+
 if __name__ == '__main__':
     os.system('cls')
     input(fnt.apply('Press ENTER to activate PARTH program: ', 'white/bold'))
     print(fnt.apply('Initializing PARTH', 'blue/bold'))
     speak('Initializing PARTH')
     wishMe()
-    main()        
-                           
+    main()
