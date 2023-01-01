@@ -71,7 +71,7 @@ def wishMe():
     '''
     print(fnt.apply('What\'s your name user?', 'blue/bold'))
     speak('What\'s your name, user?...')
-    name = takeCommand()
+    name = takeCommand() 
     if name.lower() == 'krishna anand':
         name = 'Madhav'
         print(fontstyle.apply('Special user detected!', 'green/bold'))
@@ -165,7 +165,12 @@ def main():
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
             
-        elif 'open stackoverflow' in query.lower():
+        elif 'open web code' in query.lower():
+            url = 'https://replit.com/~'
+            chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+            webbrowser.get(chrome_path).open(url)
+            
+        elif 'open stack' in query.lower() and 'over' in query and 'flow' in query:
             url = 'stackoverflow.com'
             chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
             webbrowser.get(chrome_path).open(url)
@@ -191,6 +196,7 @@ def main():
             speak('What should I search?')
 
             query = takeCommand()
+            webbrowser.get(chrome_path).open_new(base_url+query)
             
         elif 'the time' in query.lower():
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
@@ -316,8 +322,10 @@ def main():
         
             
 if __name__ == '__main__':
+    os.system('cls')
+    input(fnt.apply('Press ENTER to activate PARTH program: ', 'white/bold'))
     print(fnt.apply('Initializing PARTH', 'blue/bold'))
-    speak('Initializing PARTH')  
+    speak('Initializing PARTH')
     wishMe()
     main()        
                            
