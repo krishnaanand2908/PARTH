@@ -1,12 +1,7 @@
-from main import *
-import webbrowser
+import datetime
 
-chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+# day = datetime.datetime.now().day
+# month = datetime.datetime.now().month
+# print(day, month)
 
-base_url = "http://www.google.com/search?q="
-
-print(fnt.apply('What should I search?', 'blue/bold'))
-speak('What should I search?')
-
-query = takeCommand()
-webbrowser.get(chrome_path).open_new(base_url+query)
+print(datetime.datetime.today())
