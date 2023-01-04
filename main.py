@@ -156,7 +156,12 @@ def main():
             'chatGPT': 'chat.openai.com'
         }
 
-        chrome_path = 'chrome.exe'
+        chrome_path = 'Google Chrome.lnk'
+
+        praise_words = ['good', 'well done', 'very good',
+                        'best', 'nice', 'amazing', 'excellent']
+        not_good_words = ['worst', 'bad', 'worse',
+                          'shut up', 'get lost', 'very bad', 'not good']
 
         for website, url in websites.items():
             if f'open {website}' in query.lower():
@@ -183,6 +188,13 @@ def main():
                 speak('An Error occured!')
                 os.system('cls')
 
+            # print(fnt.apply(f'Thank You {name}\n:)', 'yellow/bold/white_bg'))
+            # speak(f'Thank You {name}\n:)')
+
+        # elif query in praise_words:
+        #     print(fnt.apply(f'I am really sorry {name}\n:(', 'yellow/bold/white_bg'))
+        #     speak(f'I am really sorry {name}\n:(')
+
         elif 'play music' in query.lower():
             songs_dir = 'PARTH_music'
             songs = os.listdir(songs_dir)
@@ -202,7 +214,7 @@ def main():
             webbrowser.get(chrome_path).open_new(base_url+query)
 
         elif 'open code' in query:
-            codePath = "Code.exe"
+            codePath = "Visual Studio Code.lnk"
             os.startfile(codePath)
 
         elif 'who am i' in query or 'who i am' in query:
@@ -287,8 +299,24 @@ def main():
             break
 
         else:
-            print(fnt.apply('Command not recognised!', 'red/bold'))
-            speak('Command not recognised!')
+            for x in praise_words:
+                if x in query:
+                    print(fnt.apply(f'Thank You {name}\n:)', 'yellow/bold/'))
+                    speak(f'Thank You {name}\n:)')
+                    break
+            else:
+                print(fnt.apply('Command not recognised!', 'red/bold'))
+                speak('Command not recognised!')
+
+            for y in not_good_words:
+                if y in query:
+                    print(
+                        fnt.apply(f'I am really sorry {name}\n:(', 'black/bold/'))
+                    speak(f'I am really sorry {name}\n:(')
+                    break
+            else:
+                print(fnt.apply('Command not recognised!', 'red/bold'))
+                speak('Command not recognised!')
 
 
 if __name__ == '__main__':
