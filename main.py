@@ -17,7 +17,7 @@ def speak(audio):
     '''
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
-    engine.setProperty('rate', 210)
+    engine.setProperty('rate', 198)
     engine.setProperty('voice', voices[0].id)
 
     engine.say(audio)
@@ -69,7 +69,7 @@ def wishMe():
     hour = int(datetime.datetime.now().hour)
     global name
     print(fnt.apply('What\'s your name user?', 'blue/bold'))
-    speak('What\'s your name, user?...')
+    speak('What\'s your name user?...')
     name = takeCommand()
 
     special_names = ["krishna anand", "shivraj anand"]
@@ -167,7 +167,7 @@ def main():
             if f'open {website}' in query.lower():
                 print(fnt.apply(f'Opening {website}...', 'green/bold'))
                 speak(f'Opening {website}')
-                webbrowser.get(chrome_path).open(url)
+                webbrowser.open(url)
 
         WIKI_SEARCH_OPTIONS = {'wikipedia': 1, 'essay': 10}
 
@@ -296,27 +296,35 @@ def main():
             print(fontstyle.apply(f'Bye {name}', 'blue/bold'))
             speak(f'Bye {name}')
             print(fontstyle.apply('Deactivated', 'red/bold'))
-            break
-
+            exit()
+        
         else:
             for x in praise_words:
                 if x in query:
                     print(fnt.apply(f'Thank You {name}\n:)', 'yellow/bold/'))
                     speak(f'Thank You {name}\n:)')
                     break
-            else:
-                print(fnt.apply('Command not recognised!', 'red/bold'))
-                speak('Command not recognised!')
+            
 
             for y in not_good_words:
-                if y in query:
+                if y in query: 
                     print(
                         fnt.apply(f'I am really sorry {name}\n:(', 'black/bold/'))
                     speak(f'I am really sorry {name}\n:(')
                     break
+
+            if (x in query) or (y in query):
+                pass
+            elif 'give' in query:
+                query = query.replace('give', '')
+                print(fnt.apply(f'You give{query}', 'purple/bold'))
+                speak(f'You give {query}')
+            # if (x not in praise_words) or (y not in not_good_words):
             else:
-                print(fnt.apply('Command not recognised!', 'red/bold'))
-                speak('Command not recognised!')
+                print(fnt.apply('Command not recognized!', 'red/bold'))
+                speak('Command not recognized!')
+        
+
 
 
 if __name__ == '__main__':

@@ -4,6 +4,8 @@ import fontstyle
 import pyttsx3
 
 
+
+
 def speak(text):
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
