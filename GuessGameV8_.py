@@ -99,7 +99,7 @@ def guess_game_v5(n):
         speak('You Loose... HAHA...')
 
 
-def main_game_(user):
+def main(user):
     os.system('cls')
     print(fontstyle.apply("Gathering Information...", "blue/bold"))
     speak("Gathering Information...")

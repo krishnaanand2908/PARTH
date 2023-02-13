@@ -9,7 +9,9 @@ import random
 import GuessGameV8_
 import superCalcy
 import overloadgame
-
+import pygame
+import rps
+import time
 
 def speak(audio):
     '''
@@ -23,7 +25,6 @@ def speak(audio):
     engine.say(audio)
     engine.runAndWait()
 
-
 def speakFast(audio):
     '''
     This function will speak or rather pronounce the argument which you will give it. It it different from the speak funtion because this one speaks faster than the original speak funtnio.
@@ -35,8 +36,7 @@ def speakFast(audio):
 
     quickEngine.say(audio)
     quickEngine.runAndWait()
-
-
+    
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -53,7 +53,6 @@ def takeCommand():
             return (fnt.apply('An error occured...', 'red/bold'))
     return query
 
-
 def wishMe():
     '''
     This function will wish the user according to the current time if the device.
@@ -64,7 +63,7 @@ def wishMe():
     year = int(datetime.datetime.now().year)  # defines year
 
     global date
-    date = f'{month}-{day}-{year}'
+    date = f'{day}-{month}-{year}'
 
     hour = int(datetime.datetime.now().hour)
     global name
@@ -98,22 +97,20 @@ def wishMe():
 
     print(fnt.apply('How may I help you?', 'blue/bold'))
     speak('How may I help you?')
-
-
+    
 def introduction():
     program_name = "PARTH"
     program_full_form = "Personal Artificial Rocking and Trustworthy Helper"
     programmer = 'Mr. Krishna Anand'
+    purpose = "To do various functions such as fast calculations, unit conversion, entertainment, provide information and to handle files."
 
     print(fnt.apply(f"Hi, It's {program_name}!", 'cyan/bold'))
     speak(f"Hi, It's {program_name}!")
-    print(
-        fnt.apply(f"{program_name} stands for {program_full_form}", 'cyan/bold'))
+    print(fnt.apply(f"{program_name} stands for {program_full_form}", 'cyan/bold'))
     speak(f"{program_name} stands for {program_full_form}")
 
-    print(
-        fnt.apply(f'I am an artificial intellengence developed by {programmer}'))
-
+    print(fnt.apply(f'I am an artificial intellengence developed by {programmer} {purpose}', ' cyan/bold'))
+    speak(f'I am an artificial intellengence developed by {programmer} {purpose}')
 
 def change_name():
     global name
@@ -138,15 +135,23 @@ def change_name():
     speak('Name changed succesfully')
     print(fnt.apply(f'Hi {name}', 'blue/bold'))
     speak(f'Hi {name}')
-
-
-def main():
-    """This function defines the logic for executing tasks based on the query"""
-    while True:
-
-        query = takeCommand().lower()
-
-        websites = {
+    
+def wikisearch(query):
+    WIKI_SEARCH_OPTIONS = {'wikipedia': 1, 'essay': 10}
+    if "wikipedia" in query:
+        newquery = query.repace("wikipedia")
+    else:
+        newquery = query.replace("essay")
+    for i in WIKI_SEARCH_OPTIONS.keys():
+        if i in query:
+            results = wikipedia.summary(newquery, sentences=WIKI_SEARCH_OPTIONS.get(i))
+            break
+    print(fnt.apply(results, "blue/bold"))
+    speak(results) if i == "wikipedia" else speakFast(results)
+    
+def webOpen(query):
+    global chrome_path
+    websites = {
             'youtube': 'www.youtube.com',
             'google': 'www.google.com',
             'replit': 'https://replit.com/~',
@@ -155,150 +160,173 @@ def main():
             'whatsapp web': 'web.whatsapp.com',
             'chatGPT': 'chat.openai.com'
         }
-
-        chrome_path = 'Google Chrome.lnk'
-
-        praise_words = ['good', 'well done', 'very good',
-                        'best', 'nice', 'amazing', 'excellent']
-        not_good_words = ['worst', 'bad', 'worse',
-                          'shut up', 'get lost', 'very bad', 'not good']
-
-        for website, url in websites.items():
-            if f'open {website}' in query.lower():
-                print(fnt.apply(f'Opening {website}...', 'green/bold'))
-                speak(f'Opening {website}')
-                webbrowser.open(url)
-        global WIKI_SEARCH_OPTIONS
-        WIKI_SEARCH_OPTIONS = {'wikipedia': 1, 'essay': 10}
-
-        if any(option in query for option in WIKI_SEARCH_OPTIONS):
-            try:
-                print(fnt.apply('Searching Wikipedia', 'blue/bold'))
-                speak('Searching Wikipedia')
-                # split query into words and unpack first and remaining words
-                search_type, *search_query = query.split()
-                num_sentences = WIKI_SEARCH_OPTIONS[search_type]
-                # join remaining words into a single string
-                results = wikipedia.summary(
-                    ' '.join(search_query), sentences=num_sentences)
-                print(fnt.apply(results, 'blue/bold'))
-                speakFast(results)
-            except:
-                print(fnt.apply('An Error occured!', 'red/bold'))
-                speak('An Error occured!')
-                os.system('cls')
-
-            # print(fnt.apply(f'Thank You {name}\n:)', 'yellow/bold/white_bg'))
-            # speak(f'Thank You {name}\n:)')
-
-        # elif query in praise_words:
-        #     print(fnt.apply(f'I am really sorry {name}\n:(', 'yellow/bold/white_bg'))
-        #     speak(f'I am really sorry {name}\n:(')
-
-        elif 'play music' in query.lower():
-            songs_dir = 'PARTH_music'
-            songs = os.listdir(songs_dir)
-
-            index = random.randint(0, len(songs)-1)
-            os.startfile(os.path.join(songs_dir, songs[index]))
-
-        elif 'search' and 'google' in query.lower():
-            chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
-
-            base_url = "http://www.google.com/search?q="
-
-            print(fnt.apply('What should I search?', 'blue/bold'))
-            speak('What should I search?')
-
-            query = takeCommand()
-            webbrowser.get(chrome_path).open_new(base_url+query)
-
-        elif 'open code' in query:
-            codePath = "Visual Studio Code.lnk"
-            os.startfile(codePath)
-
-        elif 'who am i' in query or 'who i am' in query:
-            print(f'Your are my {name}')
-            speak(f'Your are my {name}')
-
-        elif ('the date' or 'date') in query:
-            print(fnt.apply(date, 'purple/bold'))
-            speak(f'The date is {date}')
-
-        elif 'maya' in query.lower():
-            print(fnt.apply(
-                f'M.A.Y.A. is like my elder sister. I used to call her didi.', 'yellow/bold/underline'))
-            speak('MAYA is like my elder sister. I used to call her DI,DI...')
-
-        elif 'clear' and 'screen' in query:
-            os.system('cls')
-            print(fnt.apply('"Successfully cleared the screen"', 'green/bold'))
-            speak('Successfully cleared the screen')
-
-        elif 'introduce yourself' in query.lower():
-            introduction()
-
-        elif 'play' and 'game' in query.lower():
-            os.system('cls')
-            print(fnt.apply('Let\'s play a game!', 'blue/bold'))
-            speak('Let\'s play a game...')
+    chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe %s"
+    for website, url in websites.items():
+        if f"open {website}" in query:
+            print(fnt.apply(f"Opening {website}...", "green/bold"))
+            speak(f"Opening {website}")
+            webbrowser.open_new(url)
+            
+def webSearch(query):
+    base_url = "https://www.google.com/search?q="
+    print(fnt.apply("What should I search?", "blue/bold"))
+    speak("What should I search?")
+    content = takeCommand()
+    webbrowser.open_new(base_url+content)
+    
+def playMusic(songsPath):
+    songs = os.listdir(songsPath)
+    index = random.randint(0, len(songs))
+    os.startfile(songsPath, songs[index])
+    
+def openFile(filePath):
+    os.startfile(filePath)
+    
+def whoAmI():
+    print(f'Your are my {name}')
+    speak(f'Your are my {name}')
+    
+def getDate():
+    print(fnt.apply(date, "purple/bold"))
+    speak(date)
+    
+def gameing():
+    gamelist = ["GuessTheNumber", "RockPaperScissors"]
+    print(fnt.apply("What game do you want to play?", "blue/bold"))
+    speak("What game do you want to play?")
+    i = 1
+    for game in gamelist:
+        print(fnt.apply(f"{i} for {game}", "yellow/bold"))
+        i=i+1
+    gameChoice = int(input("--> "))
+    os.system('cls')
+    print(fnt.apply('Let\'s play a game!', 'blue/bold'))
+    speak('Let\'s play a game...')
+    match gameChoice:
+        case 1:
             print(fnt.apply('Choose your difficulty level.'))
             speak('Choose your difficulty level.')
             print(fnt.apply(
                 'Enter 1 for easy mode, 2 for medium mode, 3 for hard mode, 4 for the impossible mode and 5 for the OVERLOAD difficulty!', 'cyan/bold'))
             speak(
                 ('Enter 1 for easy mode 2 for medium mode 3 for hard mode 4 for the impossible mode and 5 for OVERLOAD difficulty!!!'))
-
-            mode = (input(fnt.apply('--->   ', 'blue/bold')))
-
-            if mode == "1":
-                print(fnt.apply('Downloading easy difficulty...', 'green/bold'))
-                speak('Downloading easy difficulty...')
-                GuessGameV8_.main(100)
-            elif mode == "2":
-                print(fnt.apply('Downloading medium difficulty...', 'yellow/bold'))
-                speak('Downloading medium difficulty...')
-                GuessGameV8_.main(250)
-            elif mode == "3":
-                print(fnt.apply('Downloading hard difficulty...', 'red/bold'))
-                speak('Downloading hard difficulty...')
-                GuessGameV8_.main(500)
-            elif mode == "4":
-                print(fnt.apply('Downloading impossible difficulty...', 'purple/bold'))
-                speak('Downloading impossible difficulty...')
-                GuessGameV8_.main(1000)
-            elif mode == "5":
-                print(fnt.apply(
-                    'System Overloadd!\nDownloading Overload difficulty...', 'black/bold'))
-                speak('System Overload! Downloading Overload difficulty...')
-                overloadgame.main_game_()
-            else:
-                print(fnt.apply('Can you please stop bothering me?', 'red/bold'))
-                speak('Can you please stop bothering me?')
-                print(fnt.apply('<(-_-)>/', 'red/bold'))
-
-        elif 'open calculator' in query.lower():
+            mode = int((input(fnt.apply('--->   ', 'blue/bold'))))
+            match mode:
+                case 1:
+                    print(fnt.apply('Downloading easy difficulty...', 'green/bold'))
+                    speak('Downloading easy difficulty...')
+                    GuessGameV8_.main(100)
+                case 2:
+                    print(fnt.apply('Downloading medium difficulty...', 'yellow/bold'))
+                    speak('Downloading medium difficulty...')
+                    GuessGameV8_.main(250)
+                case 3:
+                    print(fnt.apply('Downloading hard difficulty...', 'red/bold'))
+                    speak('Downloading hard difficulty...')
+                    GuessGameV8_.main(500)
+                case 4:
+                    print(fnt.apply(
+                        'System Overloadd!\nDownloading Overload difficulty...', 'black/bold'))
+                    speak('System Overload! Downloading Overload difficulty...')
+                    overloadgame.main_game_()
+                case _:
+                    print(fnt.apply('Can you please stop bothering me?', 'red/bold'))
+                    speak('Can you please stop bothering me?')
+                    print(fnt.apply('<(-_-)>/', 'red/bold'))
+        case 2:
+            rps.RPS()
+def openCalc():
+    print(fnt.apply('Opening manual calculator...', 'blue/bold'))
+    speak('Opening manual calculator...')
+    superCalcy.main_calcy()
+    
+def repeat(query):
+    print(fnt.apply(f'{query}', 'blue/bold'))
+    query = query.replace('repeat', '')
+    speak(f'You said: {query}')
+    
+def shutdown():
+    print(fnt.apply('Shutting down PARTH program...', 'red/bold'))
+    speak('Shutting down PARTH program...')
+    print(fnt.apply(f'Bye {name}', 'blue/bold'))
+    speak(f'Bye {name}')
+    print(fnt.apply('Deactivated', 'red/bold'))
+    exit()
+    
+def getTime():
+    hour = datetime.datetime.now().hour
+    minute = datetime.datetime.now().minute
+    second = datetime.datetime.now().second
+    print(fnt.apply(f"The time is {hour}:{minute}:{second}"))
+    if hour <= 12:
+        pass
+    
+def main():
+    while True:
+        query = takeCommand().lower()
+        if "essay" in query or "wikipedia" in query:
+            wikisearch(query)
+            
+        elif "open" in query:
+            try:
+                webOpen(query)
+            except:
+                openFile(query)
+                
+        elif "play music" in query:
+            playMusic("PARTH_music")
+            
+        elif "search google" in query:
+            webSearch(query)
+            
+        elif 'who am i' in query or 'who i am' in query:
+            whoAmI()
+        
+        elif "maya" in query:
+            print(fnt.apply(
+                f'M.A.Y.A. is like my elder sister. I used to call her didi.', 'yellow/bold/underline'))
+            speak('MAYA is like my elder sister. I used to call her DI,DI...')
+            
+        elif "clear" and "screen" in query:
+            os.system('cls')
+            print(fnt.apply('"Successfully cleared the screen"', 'green/bold'))
+            speak('Successfully cleared the screen')
+            time.sleep(2)
+            os.system("cls")
+            
+        elif 'introduce yourself' in query:
+            introduction()
+            
+        elif 'open calculator' in query:
             print(fnt.apply('Opening manual calculator...', 'blue/bold'))
             speak('Opening manual calculator...')
             superCalcy.main_calcy()
-
-        elif 'change' in query.lower() and 'name' in query.lower():
+        
+        elif 'change' in query.lower() and 'name' in query:
             change_name()
-
-        elif 'repeat' in query.lower():
-            print(fnt.apply(f'{query}', 'blue/bold'))
-            query = query.replace('repeat', '')
-            speak(f'You said: {query}')
-
-        elif 'shutdown' in query.lower() or 'bye' in query.lower():
+            
+        elif "repeat" in query:
+            repeat(query)
+            
+        elif "shutdown" in query or "bye" in query:
             print(fnt.apply('Shutting down PARTH program...', 'red/bold'))
             speak('Shutting down PARTH program...')
             print(fnt.apply(f'Bye {name}', 'blue/bold'))
             speak(f'Bye {name}')
             print(fnt.apply('Deactivated', 'red/bold'))
             exit()
+            
+        elif "the time" in query:
+            getDate()
+            
+        elif "the date" or "date" in query:
+            getDate()
         
         else:
+            praise_words = ['good', 'well done', 'very good',
+                        'best', 'nice', 'amazing', 'excellent']
+            not_good_words = ['worst', 'bad', 'worse',
+                          'shut up', 'get lost', 'very bad', 'not good']
             for x in praise_words:
                 if x in query:
                     print(fnt.apply(f'Thank You {name}\n:)', 'yellow/bold/'))
@@ -324,9 +352,6 @@ def main():
                 print(fnt.apply('Command not recognized!', 'red/bold'))
                 speak('Command not recognized!')
         
-
-
-
 if __name__ == '__main__':
     os.system('cls')
     input(fnt.apply('Press ENTER to activate PARTH program: ', 'white/bold'))
