@@ -167,7 +167,7 @@ def webOpen(query):
             speak(f"Opening {website}")
             webbrowser.open_new(url)
             
-def webSearch(query):
+def webSearch():
     base_url = "https://www.google.com/search?q="
     print(fnt.apply("What should I search?", "blue/bold"))
     speak("What should I search?")
@@ -187,6 +187,12 @@ def whoAmI():
     speak(f'Your are my {name}')
     
 def getDate():
+    day = int(datetime.datetime.now().day)  # defines day
+    month = int(datetime.datetime.now().month)  # defines month
+    year = int(datetime.datetime.now().year)  # defines year
+
+    global date
+    date = f'{month}-{day}-{year}'
     print(fnt.apply(date, "purple/bold"))
     speak(date)
     
@@ -258,7 +264,18 @@ def getTime():
     minute = datetime.datetime.now().minute
     second = datetime.datetime.now().second
     print(fnt.apply(f"The time is {hour}:{minute}:{second}"))
+    speak(f"The time is {hour} hours {minute} minutes and {second} seconds")
     if hour <= 12:
+        if minute > 1:
+            print(fnt.apply(f"It's {hour}:{minute} P.M."))
+            speak(f"It's {hour}:{minute} P.M.")
+        else:
+            print(fnt.apply(f"It's {hour}:{minute} A.M."))
+            speak(f"It's {hour}:{minute} A.M.")
+    elif hour > 12:
+        print(fnt.apply(f"It's {hour}:{minute} P.M."))
+        speak(f"It's {hour}:{minute} P.M.")
+    else:
         pass
     
 def main():
@@ -317,9 +334,9 @@ def main():
             exit()
             
         elif "the time" in query:
-            getDate()
+            getTime()
             
-        elif "the date" or "date" in query:
+        elif "the date" in query or "date" in query:
             getDate()
         
         else:
@@ -358,5 +375,6 @@ if __name__ == '__main__':
     os.system("cls")
     print(fnt.apply('Initializing PARTH', 'blue/bold'))
     speak('Initializing PARTH')
-    wishMe()
+    # wishMe()
+    name = "Krishna Anand"
     main()
