@@ -9,7 +9,6 @@ import random
 import GuessGameV8_
 import superCalcy
 import overloadgame
-import pygame
 import rps
 import time
 
