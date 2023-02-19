@@ -1,12 +1,16 @@
-# import math; import os; os.system("cls"); r = float(input("Enter the raidus of the circle: ")); print(f"The area of the circle with radius {r} is {math.pi*r*r}")
-def log_function(func):
-    def wrapper(*args, **kwargs):
-        print(f"Calling {func.__name__} with args: {args}, kwargs: {kwargs}")
-        return func(*args, **kwargs)
-    return wrapper
+import pyttsx3
 
-@log_function
-def my_function(x, y):
-    return x + y
+def speak(audio):
+    '''
+    This function will speak or rather pronounce the argument which you will give it.
+    '''
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    engine.setProperty('rate', 198)
+    engine.setProperty('voice', voices[0].id)
 
-my_function(3, 4)
+    engine.say(audio)
+    engine.runAndWait()
+shoutoutlist = ["Prithvi", "Harry", "Ashneer Grover"]
+for name in shoutoutlist:
+    speak(f"Shout Out to {name}")
